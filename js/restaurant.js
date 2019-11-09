@@ -9,12 +9,7 @@ var Restaurant = function(id, nombre, rubro, ubicacion, horarios, imagen, califi
 }
 
 Restaurant.prototype.reservarHorario = function(horarioReservado) {
-    for (var i = 0; i < this.horarios.length; i++) {
-        if (this.horarios[i] === horarioReservado) {
-            this.horarios.splice(i, 1);
-            return;
-        }
-    }
+    return this.horarios= this.horarios.filter(horario => horario!=horarioReservado );
 }
 
 Restaurant.prototype.calificar = function(nuevaCalificacion) {
@@ -27,13 +22,16 @@ Restaurant.prototype.obtenerPuntuacion = function() {
     if (this.calificaciones.length === 0) {
         return 0;
     } else {
-        var sumatoria = 0;
-        for (var i = 0; i < this.calificaciones.length; i++) {
-            sumatoria += this.calificaciones[i]
-        }
-        var promedio = sumatoria / this.calificaciones.length;
-        return Math.round(promedio * 10) / 10;
+        return promedio(this.calificaciones);
     }
-
 }
 
+// REaliza la suma de todos los elementos de un array
+function sumatoria(numeros){
+    return numeros.reduce((acumulador,numero) => acumulador+numero);
+}
+
+// Realiza el promedio de los elementos de un array
+function promedio(numeros){
+    return Math.round((sumatoria(numeros)/numeros.length)*10)/10;
+}
